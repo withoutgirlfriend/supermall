@@ -15,7 +15,7 @@ export default {
   name: 'TabControl',
   data(){
       return {
-          currentItem: 0
+        currentItem: 0
       }
   },
   methods: {

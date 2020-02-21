@@ -37,11 +37,17 @@ export default {
     })
   },
   methods: {
-    scrollTo(x = 0, y = 0, time = 300){
-      this.scroll.scrollTo(x, y, time)
+    scrollTo(x, y, time = 300){
+      this.scroll && this.scroll.scrollTo(x, y, time)
     },
     finishPullUp(){
       this.scroll.finishPullUp()
+    },
+    refresh(){
+      this.scroll && this.scroll.refresh()
+    },
+    scrollY(){
+      return this.scroll && this.scroll.y
     }
   }
 }
