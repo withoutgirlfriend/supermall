@@ -25,6 +25,9 @@
         </table>
       </div>
     </div>
+    <div class="go-shop">
+      进店逛逛
+    </div>
   </div>
 </template>
 
@@ -61,7 +64,8 @@ export default {
 
 <style scoped>
 .shop-info {
-  padding: 0 8px;
+  padding: 0 8px 30px 8px;
+  border-bottom: 5px solid rgba(210, 210, 210, 0.3);
 }
 
 .shop-title {
@@ -130,6 +134,17 @@ table {
   font-size: 14px;
   float: right;
   border-spacing: 0 10px;
+}
+
+.go-shop {
+  background-color: #f1f5fb;
+  width: 150px;
+  height: 30px;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 5px;
 }
 
 </style>
