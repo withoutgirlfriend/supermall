@@ -1,12 +1,14 @@
 <template>
   <div id="" class="detail">
-    <detail-nav-bar class="detail-nav"></detail-nav-bar>
+    <detail-nav-bar class="detail-nav"/>
     <scroll class="scroll" ref="scroll">
-      <detail-swiper :topImages="topImages"></detail-swiper>
-      <detail-base-info :goods="goods"></detail-base-info>
-      <detail-shop-info :shop="shop"></detail-shop-info>
-      <detail-image :detail-image="detailImage" @image-load="imageLoad"></detail-image>
-      <detail-goods-params :goodsParams="goodsParams"></detail-goods-params>
+      <detail-swiper :topImages="topImages"/>
+      <detail-base-info :goods="goods"/>
+      <detail-shop-info :shop="shop"/>
+      <detail-image :detail-image="detailImage" @image-load="imageLoad"/>
+      <detail-goods-params :goodsParams="goodsParams"/>
+      <detail-comment :comment="goodsComment"/>
+      <goods-list :goods="recommend" class="recommends"/>
     </scroll>
   </div>
 </template>
@@ -18,10 +20,13 @@ import DetailBaseInfo from './childComps/DetailBaseInfo'
 import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailImage from './childComps/DetailImage'
 import DetailGoodsParams from './childComps/DetailGoodsParams'
+import DetailComment from './childComps/DetailComment'
 
 import Scroll from 'components/common/scroll/Scroll'
+import GoodsList from 'components/content/goods/GoodsList'
+import { debounce } from 'common/tools'
 
-import {getDetail, Goods, Shop} from 'network/detail'
+import {getDetail, getRecommend, Goods, Shop} from 'network/detail'
 export default {
   name: 'Detail',
   data(){
@@ -31,7 +36,9 @@ export default {
       goods: null,
       shop: {},
       detailImage: {},
-      goodsParams: {}
+      goodsParams: {},
+      goodsComment: {},
+      recommend: []
     }
   },
   components: {
@@ -41,7 +48,9 @@ export default {
     DetailShopInfo,
     DetailImage,
     DetailGoodsParams,
-    Scroll
+    DetailComment,
+    Scroll,
+    GoodsList
   },
   created(){
     //保存传入的iid
@@ -59,9 +68,21 @@ export default {
       this.detailImage = data.detailInfo
       //获取参数信息
       this.goodsParams = data.itemParams
-      console.log(this.goodsParams);
-      
+      //获取评论信息
+      if(data.rate.cRate != 0){
+      this.goodsComment = data.rate.list[0]
+      }
     })
+    //获取推荐信息
+    getRecommend().then(res => {
+      this.recommend = res.data.list;
+    })
+  },
+  mounted(){
+      const refresh = debounce(this.$refs.scroll.refresh, 20)
+      this.$bus.$on("detailImageLoad", () =>{
+        refresh();
+      })
   },
   methods: {
     imageLoad(){
@@ -86,5 +107,9 @@ export default {
 
 .scroll {
   height: calc(100% - 44px);
+}
+
+.recommends {
+  margin-top: 15px;
 }
 </style>

@@ -41,7 +41,6 @@ export default {
     imageLoad(){
       // if(++this.counter === this.imageLength){
       this.$emit('image-load')
-      console.log(this.counter)
       // }
       
     }

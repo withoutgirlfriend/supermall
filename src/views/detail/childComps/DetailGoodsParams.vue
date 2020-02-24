@@ -28,11 +28,11 @@ export default {
       }
     }
   },
-  watch: {
-    goodsParams(){
-      console.log(this.goodsParams.info)
-    }
-  }
+  // watch: {
+  //   goodsParams(){
+  //     console.log(this.goodsParams.info)
+  //   }
+  // }
 }
 </script>
 

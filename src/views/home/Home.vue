@@ -29,6 +29,7 @@
   import BackTop from 'components/content/backTop/BackTop'
 
   import {getHomeMultidata, getHomeGoods} from "network/home/home"  
+  import { debounce } from 'common/tools'
 export default {
     name: 'Home',
     components: {
@@ -66,9 +67,9 @@ export default {
       this.getHomeGoods('sell')
     },
     mounted(){
-      const refresh =  this.debounce(this.$refs.scroll.refresh, 20)
-      this.$bus.$on("imageLoad", () =>{
-        refresh()
+      const refresh = debounce(this.$refs.scroll.refresh, 20)
+      this.$bus.$on("homeImageLoad", () =>{
+        refresh();
       })
     },
     activated(){
@@ -130,15 +131,15 @@ export default {
         this.tabControlTop = this.$refs.tabControl.$el.offsetTop
       },
       //防抖函数
-      debounce(func, delay){
-        let timer = null
-        return (...args) =>{
-          if(timer) clearTimeout(timer)
-          timer = setTimeout(() => {
-            func.apply(this, args)
-          }, delay);
-        }
-      }
+      // debounce(func, delay){
+      //   let timer = null
+      //   return (...args) =>{
+      //     if(timer) clearTimeout(timer)
+      //     timer = setTimeout(() => {
+      //       func.apply(this, args)
+      //     }, delay);
+      //   }
+      // }
     }
 }
 </script>
