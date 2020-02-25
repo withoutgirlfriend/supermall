@@ -26,12 +26,14 @@
   import TabControl from 'components/content/tabControl/TabControl'
   import GoodsList from 'components/content/goods/GoodsList'
   import Scroll from 'components/common/scroll/Scroll'
-  import BackTop from 'components/content/backTop/BackTop'
+  // import BackTop from 'components/content/backTop/BackTop'
 
   import {getHomeMultidata, getHomeGoods} from "network/home/home"  
   import { debounce } from 'common/tools'
+  import {backTopMixin} from 'common/mixin'
 export default {
     name: 'Home',
+    mixins: [backTopMixin],
     components: {
       NavBar,
       TabControl,
@@ -40,7 +42,7 @@ export default {
       FeatureView,
       GoodsList,
       Scroll,
-      BackTop
+      // BackTop
     },
     data(){
       return {
@@ -52,7 +54,7 @@ export default {
           'sell': {page: 0, list: []}
         },
         currentType: 'pop',
-        isShow: false,
+        // isShow: false,
         tabControlTop: 0,
         isFixed: false,
         scrollY: 0
@@ -115,9 +117,9 @@ export default {
         this.$refs.tabControl1.currentItem = index
         this.$refs.tabControl.currentItem = index
       },
-      backClick(){
-        this.$refs.scroll.scrollTo(0, 0)
-      },
+      // backClick(){
+      //   this.$refs.scroll.scrollTo(0, 0)
+      // },
       contentScroll(position){
         //返回顶部显示
         this.isShow = -position.y > 1000 ? true : false
