@@ -1,2 +1,6 @@
 export const ADD_COUNT = 'addCount'
 export const ADD_TO_CART = 'addToCart'
+export const CHANGE_CHECK = 'changeCheck'
+export const INCREASE_COUNT = 'increaseCount'
+export const DECREASE_COUNT = 'decreaseCount'
+export const CHECK_ALL = 'checkAll'
