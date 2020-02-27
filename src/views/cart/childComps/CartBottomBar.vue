@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="button-bar-right">
+    <div class="button-bar-right" @click="clickPay">
       <p class="to-pay">去付款({{checkProduct}})</p>
     </div>
   </div>
@@ -52,6 +52,11 @@ export default {
     //监听全选按钮的点击
     checkAllClick(){
       this.$store.dispatch('checkAll', !this.isSelectAll)
+    },
+    clickPay(){
+      if(!this.checkProduct){
+        this.$toast.show('请选择要购买的商品', 2000)
+      }
     }
   }
 }

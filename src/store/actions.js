@@ -9,13 +9,21 @@ import {
 
 export default {
     addCart(context, payload) {
-        let oldProduct = context.state.cartList.find(item => item.iid === payload.iid)
-        if (oldProduct) {
-            context.commit(ADD_COUNT, oldProduct)
-        } else {
-            payload.count = 1
-            context.commit(ADD_TO_CART, payload)
-        }
+        return new Promise((resolve, reject) => {
+            //查找购物车数组中是否有该商品
+            let oldProduct = context.state.cartList.find(item => item.iid === payload.iid)
+            if (oldProduct) {
+                //商品数量+1
+                context.commit(ADD_COUNT, oldProduct)
+                resolve('商品数量+1')
+            } else {
+                //添加商品到购物车
+                payload.count = 1
+                context.commit(ADD_TO_CART, payload)
+                resolve('成功添加到购物车')
+            }
+        })
+
     },
     changeCheck(context, payload) {
         let found = context.state.cartList.find(item => item.iid === payload)

@@ -90,7 +90,7 @@ export default {
 }
 
 .purchase {
-  background-color: #ff789a;
+  background-color: var(--color-tint);
   color: #fff;
 }
 </style>

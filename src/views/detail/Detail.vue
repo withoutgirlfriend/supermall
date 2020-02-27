@@ -12,6 +12,7 @@
     </scroll>
     <back-top @click.native="backClick"  v-show="isShow" />
     <detail-bottom-bar @addCart="addToCart"/>
+    <toast ref="toast"/>
   </div>
 </template>
 
@@ -29,8 +30,11 @@ import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
 import { debounce } from 'common/tools'
 
+import Toast from 'components/common/toast/Toast'
+
 import {getDetail, getRecommend, Goods, Shop} from 'network/detail'
 import {backTopMixin} from 'common/mixin'
+import { mapActions } from 'vuex'
 export default {
   name: 'Detail',
   mixins: [backTopMixin],
@@ -60,7 +64,8 @@ export default {
     DetailComment,
     detailBottomBar,
     Scroll,
-    GoodsList
+    GoodsList,
+    Toast
   },
   created(){
     //保存传入的iid
@@ -104,6 +109,7 @@ export default {
       })
   },
   methods: {
+    ...mapActions(['addCart']),
     imageLoad(){
       this.$refs.scroll.refresh()
       this.getTitleTopY()
@@ -125,7 +131,6 @@ export default {
       this.isShow = -position.y > 1000 ? true : false
     },
     addToCart(){
-      console.log('添加到购物车')
       //获取购物车需要展示的信息
       const product = {}
       product.image = this.topImages[0]
@@ -133,7 +138,10 @@ export default {
       product.desc = this.goods.desc
       product.title = this.goods.title
       product.iid = this.iid
-      this.$store.dispatch('addCart', product)
+      this.addCart(product).then(res => {
+        // console.log(res)
+        this.$toast.show(res)
+      })
     }
   }
 }
